@@ -61,6 +61,9 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **CLI** — Retired Arbol/action/pipeline doctrine → Hermes terminal, execute_code, durable scripts, and native scheduling
 - **Containment** — Portable-release boundary: the OS ships; personal identity, credentials, private infrastructure, and local memory do not
 - **Tools** — LifeOS utility inventory → direct Hermes tools, scripts, Hindsight/LCM, cognitive graph, diagnostics, and skill-promotion rule
+- **Memory** — LifeOS file-memory → Hermes Hindsight mapping (mutation tiers, curation coverage, lifecycle, proposal subtypes)
+- **Schema** — LifeOS USER/ directory schema → Hermes-native destination mapping
+- **Thesis** — LifeOS Thesis operational adaptation (maturity model, core loop, Pulse mapping, Respark, 2036 heuristic)
 - **CMUX** — Multiplexer terminal context management
 
 ## Claude/macOS-specific — not ported
