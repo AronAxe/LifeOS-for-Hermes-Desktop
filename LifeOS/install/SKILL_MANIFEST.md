@@ -57,6 +57,9 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **AudioEditor** — Audio processing and transcript handling
 - **Fabric** — Pattern-based text transformation engine
 - **Freshness** — Constitutional file staleness monitoring with A-F grading
+- **Memory** — LifeOS file-memory → Hermes Hindsight mapping (mutation tiers, curation coverage, lifecycle, proposal subtypes)
+- **Schema** — LifeOS USER/ directory schema → Hermes-native destination mapping
+- **Thesis** — LifeOS Thesis operational adaptation (maturity model, core loop, Pulse mapping, Respark, 2036 heuristic)
 - **CMUX** — Multiplexer terminal context management
 
 ## Claude/macOS-specific — not ported

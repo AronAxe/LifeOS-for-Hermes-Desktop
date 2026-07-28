@@ -57,3 +57,18 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `ISARenderOnStop.hook.ts` | `Stop` (batch HTML render on turn-end) | — | No | Not ported. No Hermes equivalent for automatic turn-end HTML re-render. The mirror fires on manual invocation only. |
 | `TelosFreshness.ts` | `SessionStart` / CLI / Pulse routes | `Freshness/Tools/check.py` + Freshness skill | Yes | A-F grading ported to Python stdlib. Reads TELOS Dropbox file mtimes + SOUL.md. No Pulse routes — JSON/text output. |
 | `FreshnessCache.ts` | Statusline cache (Pulse `/api/freshness/summary`) | — | No | Not ported. Hermes has no persistent terminal statusline. Freshness is queried on demand via the skill or `check.py`. |
+
+## Memory, Schema & Thesis additions
+
+| Component | Trigger | Hermes-native | Port? | Notes |
+|---|---|---|---|---|
+| `MutationTier.ts` | Memory write | `Memory` skill + Hindsight `retain` with tier-appropriate tags | Yes | Four-tier mutation system mapped to Hindsight layer boundaries (A=auto-retain set-replace, B=append unique, C=propose+confirm, D=never) |
+| `MemoryGraph.ts` | Memory graph traversal | `hindsight_recall` + cognitive-graph | Yes | Replaced by Hindsight recall and cognitive-graph typed edges |
+| `MemoryRetriever.ts` | Recall at turn start | `hindsight_recall` via `MemoryManager.prefetch_all()` | Yes | Already mapped in MemoryTurnStart row above |
+| `MemoryWriter.ts` | Retain at turn end | `hindsight_retain` via `MemoryManager.sync_all()` | Yes | Already mapped in MemoryReviewFire row above |
+| `MemoryReviewer.ts` | 8 turns / 30 min / 2 idle | Hermes turn lifecycle (turn-end retain + async `hindsight_reflect`) | Yes | Cadence built into turn lifecycle, not a subprocess |
+| `MemoryInsights.ts` | Periodic synthesis | `hindsight_reflect` via cron `lifeos-wisdom-synthesis` (every 6h) | Yes | Async reflection replaces periodic insight subprocess |
+| `MemoryStatus.ts` / `MemoryHealthCheck.ts` | SessionEnd health gate | Hindsight plugin health check (built-in) | Yes | Already mapped in MemoryHealthGate row above |
+| `MemoryRestore.ts` | Session restore | LCM session recovery + Hindsight recall | Yes | LCM handles transcript continuity; Hindsight handles durable memory |
+| `LifeOsSchema` (USER/ directory) | File watch / indexer | `Schema` skill + Hindsight tags + cognitive-graph | Yes | File-tree schema → Hindsight document mapping. No fs.watch indexer. |
+| `LifeOsThesis` | Conceptual reference | `Thesis` skill | Yes | Operational adaptation of the thesis for Hermes-native DA. Not a runtime component — reference knowledge. |
