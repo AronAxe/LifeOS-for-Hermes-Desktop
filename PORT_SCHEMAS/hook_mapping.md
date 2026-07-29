@@ -97,3 +97,33 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `tab-setter.ts` / `TabState.hook.ts` | Kitty tab painting | Hermes desktop app panes | No | Kitty terminal not used. Desktop app has its own UI. |
 | `PromptProcessing.hook.ts` | UserPromptSubmit → working state | Hermes chat pane (native) | No | No tab painting needed. Chat pane shows state natively. |
 | `KittyEnvPersist.hook.ts` | SessionStart → Kitty env | Not needed | No | No Kitty terminal in Hermes |
+
+## Router, Security & BackgroundServices additions
+
+| Component | Trigger | Hermes-native | Port? | Notes |
+|---|---|---|---|---|
+| `TheRouter.hook.ts` (retired 2026-07-11) | `UserPromptSubmit` → classify mode/tier | DA judgment + skill loading | No | Retired. No classifier hook. DA calibrates effort by choosing what to load, what to delegate, and how many passes to run. See **Router** skill. |
+| `LIFEOS/TOOLS/models.ts` `EFFORT_MODEL` | Model selection by effort level | `config.yaml` `model.default` + provider config | No | No four-level abstraction. Single default model per profile. See **Router** skill. |
+| `LIFEOS/TOOLS/Inference.ts` | Utility-path inference (summaries, classification, vision) | Direct tool calls (`web_search`, `web_extract`, `vision_analyze`) | No | No separate utility-inference layer. Tools run directly. |
+| `LIFEOS/ALGORITHM/v{VERSION}.md` tier→level table | Effort routing policy | DA judgment + Algorithm skill | No | No fixed tier→level table. DA calibrates effort implicitly. |
+| `additionalContext` classifier contract | Classifier output → executor | Hindsight recall + LCM + skills + constitution | No | No classifier output block. Context comes from Hermes runtime mechanisms. |
+| `EgressClassGuard.hook.ts` | `PreToolUse` → egress class check | Provider selection + DA judgment + constitution §8 | No | No runtime egress guard. DA classifies data sensitivity and selects trusted providers. See **Security** skill. |
+| `Safety.hook.ts` (PermissionRequest) | Outgoing tool call shape classification | Hermes tool approval + DA judgment | Yes | Shape catalog encoded in DA security knowledge, not regex. See **Security** skill. |
+| `Safety.hook.ts` (PostToolUse/annotation) | Web content → `[EXTERNAL CONTENT]` header | Constitution §8 (DA judgment) | No | DA treats external content as data per constitution. No header injection needed. |
+| `safety-classifier.ts` shape catalog | Regex patterns for dangerous/credential/injection | DA knowledge + Hermes tool gating | No | Patterns encoded in DA's security knowledge, not a regex library. |
+| `permission-cache.json` | SHA-keyed allow-only cache | Not needed | No | Hermes tool approval is stateless per call. |
+| `permission-decisions.jsonl` / `egress-decisions.jsonl` | Telemetry logging | LCM + session DB | Yes | No JSONL telemetry. LCM tracks natively. |
+| `DENY_LIST.txt` + `DenyListCheck.ts` + `ShadowRelease.ts` | Release pipeline sensitive-pattern gating | DA judgment + git hygiene | No | No automated release pipeline. DA checks for sensitive patterns before publishing. |
+| `ContainmentGuard.hook.ts` (retired) | PreToolUse → containment zone check | Not needed | No | Release-only in LifeOS. Not needed in Hermes. |
+| `LIFEOS/TOOLS/Services.ts` | Service registry + `launchd` install/uninstall | `cronjob action='list'/'create'/'remove'` + `process(action='list')` | Yes | One registry + launchd → Hermes cron + background processes. See **BackgroundServices** skill. |
+| `~/Library/LaunchAgents/*.plist` | `launchd` job definitions | `cronjob` schedule config | Yes | Plists → cron schedule expressions. Cross-platform (no macOS dependency). |
+| `launchctl list` | Live service state | `cronjob action='list'` + `process(action='list')` | Yes | Live state from runtime, not a file. |
+| `com.lifeos.synthesis` | `launchd` daily synthesis pass | `hindsight_reflect` via cron `lifeos-wisdom-synthesis` (every 6h) | Yes | Async reflection replaces periodic synthesis subprocess. |
+| `com.lifeos.worksweep` | `launchd` every 1h work capture | Hermes cron (optional, not currently configured) | Optional | Can review session state and TELOS alignment. |
+| `com.lifeos.derivedsync` | `launchd` file-change sync (31 files) | Not needed | No | No fs.watch indexer. Hindsight recall is the index. See **Schema** skill. |
+| `com.lifeos.healthsync` | `launchd` every 1h health sync | Hermes cron (optional) | Optional | Can sync health data if needed. Not currently ported. |
+| `com.lifeos.commitmentsweep` | `launchd` daily commitment sweep | Hermes cron (optional) | Optional | Can check Hindsight for commitments/reminders. |
+| `com.lifeos.blogdiscovery` | `launchd` daily blog signal | Hermes cron (optional) | Optional | Can discover blog-worthy signal from recent work. |
+| `com.lifeos.usage-aggregator` | `launchd` daily usage telemetry | Not needed | No | Hermes tracks usage natively via LCM. |
+| `com.lifeos.backups` | `launchd` daily 03:00 repo backup | Git push (manual or cron) | Optional | Repo backed up via git. Cron can automate. |
+| Hourly security scanner (Arbol) | Scheduled external security scan | DA judgment + manual review | No | No automated scanner. DA performs security review before publishing. |

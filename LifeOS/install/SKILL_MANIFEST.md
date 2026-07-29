@@ -63,6 +63,9 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **Pulse** — LifeOS Pulse daemon → Hermes-native mapping (DA subsystem, terminal tabs, metadata surfaces, Observatory dashboard)
 - **Notifications** — LifeOS notification system → Hermes TTS/phone/gateway mapping (voice, ntfy, Discord, smart routing, event log)
 - **Observability** — LifeOS observability pipeline → Hermes LCM/logging mapping (event sources, session state, dashboard)
+- **Router** — Retired LifeOS Router subsystem → Hermes config/delegation/DA judgment mapping (model selection, effort calibration, dispatch policy, cross-vendor egress)
+- **Security** — LifeOS security doctrine (4 articles) → Hermes-native mapping (data classification, egress routing, three-layer defense, supply-chain response)
+- **BackgroundServices** — LifeOS launchd service registry → Hermes cron/plugins mapping (16 services, scheduling, lifecycle)
 - **CMUX** — Multiplexer terminal context management
 
 ## Claude/macOS-specific — not ported
