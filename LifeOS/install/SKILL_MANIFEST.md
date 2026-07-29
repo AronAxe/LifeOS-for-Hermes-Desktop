@@ -60,6 +60,9 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **Memory** — LifeOS file-memory → Hermes Hindsight mapping (mutation tiers, curation coverage, lifecycle, proposal subtypes)
 - **Schema** — LifeOS USER/ directory schema → Hermes-native destination mapping
 - **Thesis** — LifeOS Thesis operational adaptation (maturity model, core loop, Pulse mapping, Respark, 2036 heuristic)
+- **Pulse** — LifeOS Pulse daemon → Hermes-native mapping (DA subsystem, terminal tabs, metadata surfaces, Observatory dashboard)
+- **Notifications** — LifeOS notification system → Hermes TTS/phone/gateway mapping (voice, ntfy, Discord, smart routing, event log)
+- **Observability** — LifeOS observability pipeline → Hermes LCM/logging mapping (event sources, session state, dashboard)
 - **CMUX** — Multiplexer terminal context management
 
 ## Claude/macOS-specific — not ported

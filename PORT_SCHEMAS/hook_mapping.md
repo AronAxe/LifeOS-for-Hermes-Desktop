@@ -72,3 +72,28 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `MemoryRestore.ts` | Session restore | LCM session recovery + Hindsight recall | Yes | LCM handles transcript continuity; Hindsight handles durable memory |
 | `LifeOsSchema` (USER/ directory) | File watch / indexer | `Schema` skill + Hindsight tags + cognitive-graph | Yes | File-tree schema → Hindsight document mapping. No fs.watch indexer. |
 | `LifeOsThesis` | Conceptual reference | `Thesis` skill | Yes | Operational adaptation of the thesis for Hermes-native DA. Not a runtime component — reference knowledge. |
+
+## Pulse, Notifications & Observability additions
+
+| Component | Trigger | Hermes-native | Port? | Notes |
+|---|---|---|---|---|
+| `pulse.ts` / `pulse-unified.ts` | Always-on daemon (port 31337) | Hermes cron + plugins + gateway + TTS + LCM | Yes | Monolithic daemon → distributed runtime. No single process or port. |
+| `VoiceServer/voice.ts` | `/notify` endpoint → ElevenLabs | Hermes TTS plugin (`text_to_speech`) | Yes | curl→/notify→VoiceServer chain replaced by single tool call |
+| `Observability/observability.ts` | HTTP API + Next.js dashboard | Hermes LCM (`lcm_status`, `lcm_inspect`, `session_search`) + desktop app | Yes | JSONL event files → LCM session DB. No polling. |
+| `modules/telegram.ts` | grammY polling bot | Hermes gateway integration | Yes | Native Hermes gateway handles Telegram |
+| `modules/imessage.ts` | SQLite polling bot | Not ported (Windows) | No | iMessage not available on Windows |
+| `checks/github-work.ts` | GitHub Issues polling | Hermes cron + `gh` CLI | Yes | Cron job that runs `gh issue list` periodically |
+| `Assistant/module.ts` (DA subsystem) | DA identity, heartbeat, growth | SOUL.md + Hermes cron + Hindsight | Yes | Identity in SOUL.md, heartbeat as cron job, growth via `hindsight_reflect` |
+| `modules/user-index.ts` | USER/ indexer with fs.watch | Hindsight recall + cognitive-graph | Yes | No filesystem watcher. Recall is the index. |
+| `modules/hooks.ts` | Skill-guard and agent-guard | Hermes tool approval + safety middleware | Yes | Built into Hermes runtime |
+| `notifications.ts` (smart routing) | Event type → channel routing | DA judgment + `send_message(target="phone")` + `text_to_speech` | Yes | Routing table → DA judgment. Most events stay in chat. |
+| `lib/homographs.ts` / `PRONUNCIATIONS.json` | Pronunciation normalization | Not ported | No | Hermes TTS plugin handles pronunciation natively |
+| `VoiceCompletion.hook.ts` | Stop → extract `🗣️` → `/notify` | Hermes TTS plugin (built-in) | Yes | No hook needed. DA decides when to speak. |
+| `notification-governor.ts` | Notification rate limiting | DA judgment | Yes | No separate governor. DA avoids notification fatigue by design. |
+| `EventLogger.hook.ts` | PostToolUse → JSONL append | Hermes built-in tool logging + LCM | Yes | No JSONL files. LCM and session DB track events natively. |
+| `AgentInvocation.hook.ts` | Pre/PostToolUse(Agent) → subagent-events.jsonl | Hermes `delegate_task` lifecycle tracking | Yes | Native delegation tracking. No JSONL. |
+| `MEMORY/STATE/work.json` | Session state registry | LCM session database | Yes | Atomic read-modify-write → LCM native session management |
+| `SessionAnalysis.hook.ts` | UserPromptSubmit → upsertSession | Hermes session start (LCM) | Yes | Session classification built into LCM |
+| `tab-setter.ts` / `TabState.hook.ts` | Kitty tab painting | Hermes desktop app panes | No | Kitty terminal not used. Desktop app has its own UI. |
+| `PromptProcessing.hook.ts` | UserPromptSubmit → working state | Hermes chat pane (native) | No | No tab painting needed. Chat pane shows state natively. |
+| `KittyEnvPersist.hook.ts` | SessionStart → Kitty env | Not needed | No | No Kitty terminal in Hermes |

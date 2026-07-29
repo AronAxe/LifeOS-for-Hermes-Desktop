@@ -83,6 +83,8 @@ Keep these systems distinct and use each for its proper role:
 
 Do not flatten one layer into another. Promote only compact, durable, reviewed insights across boundaries.
 
+The **Observability skill** (`/skill observability`) maps the LifeOS event pipeline to Hermes-native equivalents: LCM replaces JSONL event files, `lcm_status`/`lcm_inspect`/`session_search` replace the Pulse HTTP API, and the Hermes desktop app replaces the Observatory dashboard. The **Pulse skill** (`/skill pulse`) maps the Pulse daemon architecture and DA subsystem to Hermes-native equivalents. The **Notifications skill** (`/skill notifications`) maps voice, push, and smart routing to Hermes TTS, `send_message`, and gateway integrations.
+
 ## 7. Skills
 
 LifeOS skills belong to the same installed Hermes skill body as the rest of the principal’s skills. Do not create a separate runtime skill bank. Preserve provenance and avoid overwriting an existing skill without an explicit merge/update decision.
