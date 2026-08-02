@@ -7,8 +7,9 @@ This manifest categorizes all LifeOS skills present in `LifeOS/install/skills/` 
 These skills are fully compatible with Hermes and install into `$HERMES_HOME/skills/` as a unified skill body:
 
 - **Algorithm** — 7-phase execution loop (OBSERVE→LEARN), effort tiers E1-E5, and ISC quality gates
-- **Amber** — Idea capture and preservation loop (capture→preserve→grade→route→resurface) backed by Hindsight
+- **Amber** — Legacy compatibility alias for Synapse's idea preservation stage; Hindsight-backed capture and resurfacing
 - **Conduit** — Current-state sensing via deterministic Windows polling and daily rollup into Hindsight
+- **Synapse** — Weighted input router (capture → journal → grade → route → resurface), superseding Amber as the canonical router
 - **ISA** — Information Structure Architecture & workspace state manager
 - **Telos** — Life direction, core values, and mission alignment system
 - **WorldThreatModel** — 11 time-horizon macro forecast and vulnerability matrix
@@ -29,6 +30,8 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **BiasCheck** — Cognitive bias detection and calibration
 - **SystemsThinking** — Dynamic systems modeling and leverage point identification
 - **CreateSkill** — Automated skill creation and packaging engine
+- **SkillSystem** — LifeOS skill authoring doctrine mapped to Hermes skill discovery, management, customization, privacy boundaries, and ideal-state prompting
+- **Testing** — LifeOS testing doctrine mapped to Hermes evidence-first verification, ISA probes, anti-criteria, hermetic tests, and repository-native checks
 - **CreateCLI** — Command-line tool scaffold generator
 - **Config** — Hermes-native config layering (constitution → config.yaml → SOUL.md → TELOS → skills); replaces the LifeOS system/user settings merge
 - **Delegation** — Subagent task distribution and result synthesis via `delegate_task`, model-tier matching, and verified fan-out

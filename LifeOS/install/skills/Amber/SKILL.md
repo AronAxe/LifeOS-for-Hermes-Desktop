@@ -1,10 +1,12 @@
 ---
 name: Amber
-description: "The idea supply chain — catches a high-quality idea the moment it crosses the principal's attention, preserves it forever in Hindsight (append-only, unconditional), grades it against TELOS, routes it to the right home, and lets it be found again. Capture → Preserve → Grade → Route → Resurface. USE WHEN: amber, capture idea, save this idea, preserve this, keep this thought, search ideas, route ideas, triage captures, what did I save about X. NOT FOR active task state (workspace/ISA), one-shot research (use Research), or curating the typed Knowledge graph directly (use Knowledge)."
+description: "Legacy compatibility alias for Synapse's idea supply chain — catches, preserves, grades, routes, and resurfaces ideas through Hindsight. Capture → Preserve → Grade → Route → Resurface. USE WHEN: amber, legacy Amber capture, capture idea, save this idea, preserve this, keep this thought, search ideas, route ideas, triage captures. For the canonical weighted input-router model, use Synapse. NOT FOR active task state (workspace/ISA), one-shot research (use Research), or curating the typed Knowledge graph directly (use Knowledge)."
 effort: medium
 ---
 
-# Amber — Idea Capture & Preservation
+# Amber — Legacy Synapse Alias
+
+Amber is retained as a compatibility name for the preservation stage of **Synapse**, the canonical weighted input router. Load **Synapse** for the complete current model; this skill preserves the established capture contract and Hindsight mapping for existing references.
 
 ## What It Does
 

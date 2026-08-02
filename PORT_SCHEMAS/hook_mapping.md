@@ -127,3 +127,18 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `com.lifeos.usage-aggregator` | `launchd` daily usage telemetry | Not needed | No | Hermes tracks usage natively via LCM. |
 | `com.lifeos.backups` | `launchd` daily 03:00 repo backup | Git push (manual or cron) | Optional | Repo backed up via git. Cron can automate. |
 | Hourly security scanner (Arbol) | Scheduled external security scan | DA judgment + manual review | No | No automated scanner. DA performs security review before publishing. |
+
+## SkillSystem, Synapse & Testing additions
+
+| Component | Trigger | Hermes-native | Port? | Notes |
+|---|---|---|---|---|
+| `skills/CreateSkill/SKILL.md` + `Skills__SkillSystem` doctrine | Skill creation, canonicalization, discovery | `skills_list`, `skill_view`, `skill_manage`, `read_file` | Yes | LifeOS naming, routing, customization, and ideal-state doctrine mapped to Hermes skill operations. No Claude settings or file-memory runtime. |
+| `skills/_*/**` private boundary | Release containment | Hermes skill provenance + explicit private/public review | Yes | TitleCase skills remain generic; identity-bound or environment-specific content is private and must not enter public artifacts. |
+| `SKILLCUSTOMIZATIONS` / `PREFERENCES.md` | Per-user overlays | Hindsight durable preferences + generic skill body | Adapted | Hindsight stores durable preferences/knowledge; skills remain generic. |
+| Synapse capture contract | Any input crosses attention | Hindsight `retain` with stable `user:{user_id}:synapse:{capture_id}` and provenance tags | Yes | Preserve before grade; `source`, `external_id`, `url`/`content`, `captured_at`, `content_kind`, `privacy_class` are required. |
+| Amber ledger / `amber` D1 journal | Write-ahead preservation | Hindsight durable capture records | Adapted | Amber is the legacy name; Synapse is canonical. No custom D1 or JSONL runtime. |
+| Synapse grade | TELOS alignment and quality evaluation | Hindsight `recall`/`reflect` + DA judgment | Yes | Weak captures remain preserved even when no destination is earned. |
+| Synapse route | Destination selection | Hindsight categories, cognitive graph, workspace/ISA, approved external outputs | Yes | Active task state remains workspace/ISA, not Hindsight. |
+| LifeOS `bun test` / shared Bun harness | ISA `## Test Strategy` → executable probe | Hermes native repository tests, `terminal`, `read_file`, `git diff`, provider read-back | Adapted | Bun harness is not a Hermes dependency. Match the probe to the artifact and never fabricate green evidence. |
+| `Anti:` ISC | Regression prevention | Testing skill + ISA test strategy | Yes | Anti-criteria are first-class and must be directly falsified by a real probe. |
+| State-machine edge tests | Transition verification | Hermes Testing skill | Yes | The test must produce the transition; hand-written terminal state is insufficient. |
