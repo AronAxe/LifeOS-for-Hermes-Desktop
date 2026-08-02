@@ -41,6 +41,15 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `com.lifeos.conduit` | `launchd` every 120s | Hermes cron `conduit-capture` every 2min | Yes | Runs `capture.py` to poll current-state signals (appFocus/git/hermesSession) into events.jsonl |
 | `com.lifeos.conduit.insight` | `launchd` every 1h | Hermes cron `conduit-rollup` daily | Yes | Runs `rollup.py` for deterministic daily record, retains into Hindsight |
 
+## Tools, CLI & Containment additions
+
+| Source component / doctrine | Hermes-native | Port? | Notes |
+|---|---|---|---|
+| `Tools__CliFirstArchitecture` | `CliFirstArchitecture` skill | Yes — doctrine | Deterministic executable operations precede prompts. Hermes consumes local capabilities through native tools, scripts, or CLI; MCP serves a capability only when external clients need it. |
+| `Tools__Cli` / legacy Arbol `pai` action-pipeline model | `CLI` skill + `terminal`, `execute_code`, durable scripts, `cronjob` | Adapted | Preserve explicit input/output, stream separation, exit status, JSON-compatible composition, and direct verification. The custom runner, Bun, and model-level wrappers are retired dependencies. |
+| `Tools__Tools` utility inventory | `Tools` skill + native Hermes tools | Yes — doctrine | `Inference` → configured Hermes provider/tools; memory retrieval → Hindsight/LCM; graph → cognitive graph; monitor → process/cron; doctor → live probes. No custom utility clone. |
+| `Tools__Containment` + `SystemFileGuard.hook.ts` | `Containment` skill + constitution §8 + deliberate staging/release review | Adapted | The portable/private boundary is retained, but Hermes has no direct equivalent of the source system's static containment-zone registry or write-time Claude hook. It is an explicit review gate, not a claimed automatic enforcement layer. |
+
 ## Config & Delegation additions
 
 | Component | Trigger | Hermes-native | Port? | Notes |
@@ -114,7 +123,7 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `permission-cache.json` | SHA-keyed allow-only cache | Not needed | No | Hermes tool approval is stateless per call. |
 | `permission-decisions.jsonl` / `egress-decisions.jsonl` | Telemetry logging | LCM + session DB | Yes | No JSONL telemetry. LCM tracks natively. |
 | `DENY_LIST.txt` + `DenyListCheck.ts` + `ShadowRelease.ts` | Release pipeline sensitive-pattern gating | DA judgment + git hygiene | No | No automated release pipeline. DA checks for sensitive patterns before publishing. |
-| `ContainmentGuard.hook.ts` (retired) | PreToolUse → containment zone check | Not needed | No | Release-only in LifeOS. Not needed in Hermes. |
+| `ContainmentGuard.hook.ts` (retired) | PreToolUse → containment zone check | `Containment` skill + constitution §8 + staged release review | Adapted | Retains the portable/private policy but not the static zone registry or automatic pre-write hook. Before public commits/releases, inspect the actual diff and scan the intended public files for personal data, credentials, private identifiers, and user-specific paths. |
 | `LIFEOS/TOOLS/Services.ts` | Service registry + `launchd` install/uninstall | `cronjob action='list'/'create'/'remove'` + `process(action='list')` | Yes | One registry + launchd → Hermes cron + background processes. See **BackgroundServices** skill. |
 | `~/Library/LaunchAgents/*.plist` | `launchd` job definitions | `cronjob` schedule config | Yes | Plists → cron schedule expressions. Cross-platform (no macOS dependency). |
 | `launchctl list` | Live service state | `cronjob action='list'` + `process(action='list')` | Yes | Live state from runtime, not a file. |

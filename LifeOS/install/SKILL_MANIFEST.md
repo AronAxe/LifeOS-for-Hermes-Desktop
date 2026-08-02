@@ -69,6 +69,10 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **Router** — Retired LifeOS Router subsystem → Hermes config/delegation/DA judgment mapping (model selection, effort calibration, dispatch policy, cross-vendor egress)
 - **Security** — LifeOS security doctrine (4 articles) → Hermes-native mapping (data classification, egress routing, three-layer defense, supply-chain response)
 - **BackgroundServices** — LifeOS launchd service registry → Hermes cron/plugins mapping (16 services, scheduling, lifecycle)
+- **CliFirstArchitecture** — Deterministic executable operations before prompts; CLI-first internal capability design and MCP serving boundary
+- **CLI** — Retired Arbol/action/pipeline doctrine → Hermes terminal, execute_code, durable scripts, and native scheduling
+- **Containment** — Portable-release boundary: the OS ships; personal identity, credentials, private infrastructure, and local memory do not
+- **Tools** — LifeOS utility inventory → direct Hermes tools, scripts, Hindsight/LCM, cognitive graph, diagnostics, and skill-promotion rule
 - **CMUX** — Multiplexer terminal context management
 
 ## Claude/macOS-specific — not ported
