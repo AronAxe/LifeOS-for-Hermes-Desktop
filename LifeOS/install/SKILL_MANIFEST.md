@@ -57,6 +57,10 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **AudioEditor** — Audio processing and transcript handling
 - **Fabric** — Pattern-based text transformation engine
 - **Freshness** — Constitutional file staleness monitoring with A-F grading
+- **CliFirstArchitecture** — Deterministic executable operations before prompts; CLI-first internal capability design and MCP serving boundary
+- **CLI** — Retired Arbol/action/pipeline doctrine → Hermes terminal, execute_code, durable scripts, and native scheduling
+- **Containment** — Portable-release boundary: the OS ships; personal identity, credentials, private infrastructure, and local memory do not
+- **Tools** — LifeOS utility inventory → direct Hermes tools, scripts, Hindsight/LCM, cognitive graph, diagnostics, and skill-promotion rule
 - **CMUX** — Multiplexer terminal context management
 
 ## Claude/macOS-specific — not ported
