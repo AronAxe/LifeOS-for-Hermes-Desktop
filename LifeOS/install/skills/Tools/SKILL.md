@@ -24,7 +24,7 @@ Old LifeOS utilities map directly to native Hermes capabilities. Do not attempt 
 | :--- | :--- | :--- |
 | `Inference.ts` (Model levels) | Configured Hermes model/provider & native tools | No custom inference clone needed; rely on platform model configuration. |
 | `MemoryRetriever` | Hindsight recall/reflect & LCM | Use native long-term memory for session context instead of custom vector retrieval. |
-| `KnowledgeGraph` | Cognitive Graph | Native representation of entity relations. |
+| `KnowledgeGraph` | Hindsight & Cognitive Graph | Hindsight: durable entities, contacts, general/domain knowledge, ordinary factual relationships, and durable learnings. Cognitive graph: only reviewed values, heuristics, tensions, assumptions, mental models, and projects. Arbitrary Knowledge Archive tags, wikilinks, and related notes do not enter mind.db merely because they are linked or graph-shaped. |
 | Localhost Voice Server | `text_to_speech` & `send_message`/gateway | No direct port. Use native audio/message routing. |
 | `Monitor` | Background Processes & Cronjobs | Use terminal background tasks with `notify_on_complete`/watch patterns. **No sleep loops.** |
 | `Doctor` | Live Probes & Diagnostics | Run live Hermes/tool probes for advisory diagnostics. Do not treat a static capability cache as ground truth. |
