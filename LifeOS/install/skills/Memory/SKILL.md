@@ -33,11 +33,11 @@ The LifeOS four-tier mutation system maps to Hermes layer boundaries:
 | `LEARNING/` | Hindsight `cat:learning` | Session completion, failure | On completion |
 | `WISDOM/` | Hindsight `cat:wisdom` | `hindsight_reflect` synthesis | Cron `lifeos-wisdom-synthesis` every 6h |
 | `RELATIONSHIP/` | Hindsight `cat:identity` | Relationship context update | On change |
-| TELOS summary | Hindsight `cat:telos` with `source:dropbox_telos` | TELOS file change | On TELOS refresh |
+| TELOS summary | Hindsight `cat:telos` with `source:configured_telos` | TELOS file change | On TELOS refresh |
 | ISA sync | Workspace/ISA files (NOT Hindsight) | Phase transition | Per-ISA |
 | Security | Hermes security logs (NOT Hindsight) | Event-driven | Continuous |
 | Observability | Hermes LCM + session logs (NOT Hindsight) | Built-in | Continuous |
-| TELOS source files | Dropbox `E:/Dropbox/ARON BIJL MSC/TELOS/` | Manual / cron refresh | As needed |
+| TELOS source files | the configured TELOS source in `LifeOS/install/HERMES.md` | Manual / cron refresh | As needed |
 | Credentials | Never touched | — | — |
 | Code | Git repository | — | — |
 
@@ -107,5 +107,5 @@ These belong in Hermes session, workspace, or logging layers — **never** in Hi
 ## Configuration Notes
 
 - `memory_enabled: false` in `config.yaml` is **intentional**. Enabling it activates Hermes' built-in bolt-on memory system, which is NOT used. Hindsight runs independently via its own plugin + `hindsight_recall`/`retain`/`reflect` tools + the cron job.
-- TELOS is loaded from `E:/Dropbox/ARON BIJL MSC/TELOS/` and retained with `document_id: "user:aron:telos"`, tags `["cat:telos", "cat:identity", "durability:core", "source:dropbox_telos"]`.
-- Cron `lifeos-wisdom-synthesis` (every 6h, `deliver: local`): calls `hindsight_reflect` to synthesize patterns, optionally retains output with `cat:wisdom` and `document_id: "user:aron:wisdom:synthesized"`.
+- TELOS is loaded from the configured TELOS source in `LifeOS/install/HERMES.md` and retained with `document_id: "user:{id}:telos"`, tags `["cat:telos", "cat:identity", "durability:core", "source:configured_telos"]`.
+- Cron `lifeos-wisdom-synthesis` (every 6h, `deliver: local`): calls `hindsight_reflect` to synthesize patterns, optionally retains output with `cat:wisdom` and `document_id: "user:{id}:wisdom:synthesized"`.

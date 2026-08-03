@@ -70,7 +70,7 @@ LifeOS Pulse is a web-based React dashboard. Hermes has no Pulse web app. The He
 
 | LifeOS `USER/` File | Hermes Destination | Notes |
 |---|---|---|
-| `PRINCIPAL/PRINCIPAL_IDENTITY.md` | Hindsight `cat:identity` + `cat:telos` | Canonical source: Dropbox TELOS |
+| `PRINCIPAL/PRINCIPAL_IDENTITY.md` | Hindsight `cat:identity` + `cat:telos` | Canonical source: configured TELOS source in `LifeOS/install/HERMES.md` |
 | `PRINCIPAL/PRINCIPAL_MEMORY.md` | Hindsight `cat:identity` | Stable `document_id: user:{id}:identity:principal` |
 | `DIGITAL_ASSISTANT/DA_IDENTITY.md` | `$HERMES_HOME/SOUL.md` | Agent identity (HAL) |
 | `DIGITAL_ASSISTANT/DA_MEMORY.md` | SOUL.md + Hindsight `cat:identity` | Agent operational memory |
@@ -105,7 +105,7 @@ LifeOS Pulse is a web-based React dashboard. Hermes has no Pulse web app. The He
 
 The `USER/` file tree in the LifeOS repository is **reference scaffolding** for understanding the schema concept. It is not the runtime source of truth. In Hermes:
 
-- **TELOS** lives at `E:/Dropbox/ARON BIJL MSC/TELOS/`
+- **TELOS** lives at the configured TELOS source in `LifeOS/install/HERMES.md`
 - **Agent identity** lives in `$HERMES_HOME/SOUL.md`
 - **Durable memory** lives in Hindsight
 - **Cognitive graph** holds typed decision architecture

@@ -27,8 +27,8 @@ Every turn is a hill-climb: pick the next move that reduces the gap between curr
 
 | State | Source | Hermes Mechanism |
 |---|---|---|
-| **Current state** | Hindsight recall, Conduit sensing, TELOS files, session context, LCM | `hindsight_recall`, Conduit `rollup.py`, TELOS Dropbox read, LCM context |
-| **Ideal state** | TELOS (Dropbox), cognitive-graph goals, Hindsight `cat:telos` | TELOS files at `E:/Dropbox/ARON BIJL MSC/TELOS/`, cognitive-graph traversal, tagged recall |
+| **Current state** | Hindsight recall, Conduit sensing, TELOS files, session context, LCM | `hindsight_recall`, Conduit `rollup.py`, TELOS read from configured source in `LifeOS/install/HERMES.md`, LCM context |
+| **Ideal state** | TELOS (configured source in `LifeOS/install/HERMES.md`), cognitive-graph goals, Hindsight `cat:telos` | TELOS files at configured TELOS source in `LifeOS/install/HERMES.md`, cognitive-graph traversal, tagged recall |
 | **Hill-climb** | The next move that reduces the gap | Every turn: observe, think, plan, build, execute, verify, learn |
 
 This is already stated in `HERMES_CONSTITUTION.md` §1. The skill makes it actionable: before acting, recall current state; after acting, check whether the gap narrowed.
@@ -72,7 +72,7 @@ Respark is the process of reclaiming human attention from digital noise:
 
 | Concept | Meaning | Hermes Destination |
 |---|---|---|
-| **Sparks** | Things that genuinely energize the principal | TELOS (Dropbox) + Hindsight `cat:telos` with `domain:respark` |
+| **Sparks** | Things that genuinely energize the principal | TELOS (configured source in `LifeOS/install/HERMES.md`) + Hindsight `cat:telos` with `domain:respark` |
 | **Play** | Space for unstructured exploration | Preserved in TELOS; DA asks about spark-related context |
 | **Integration** | Weaving sparks into daily work | DA surfaces spark-relevant opportunities during planning |
 
