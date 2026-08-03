@@ -20,25 +20,24 @@ Doing independent work serially wastes wall-clock; throwing a heavyweight model 
 
 ## Model Selection Matrix
 
-Hermes uses its own model routing (config'd in `delegation.*`); describe the tier by capability, not a hardcoded name.
+Model and provider configuration belongs in `delegation.*` config, not in dispatch examples. `delegate_task` has no `model` parameter; it inherits the parent model/fallback chain. Describe the tier by capability, not a hardcoded name.
 
-| Task Type | Capability Tier | Model |
-|---|---:|---:|---|
-| Deep reasoning, complex architecture, adversarial verification | **Strongest available** | `gpt-5.6-luna` / `gpt-5.6-terra` / `gpt-5.6-sol` |
-| Standard implementation, most coding, focused analysis | **Mid-tier** | `gpt-5.4` |
-| Simple lookups, file reads, classification, parallel grunt work | **Cheapest capable** | `gpt-4-mini` |
+| Task Type | Capability Tier |
+|---|---:|
+| Deep reasoning, complex architecture, adversarial verification | **Strongest available** |
+| Standard implementation, most coding, focused analysis | **Mid-tier** |
+| Simple lookups, file reads, classification, parallel grunt work | **Cheapest capable** |
 
-Set the model per dispatch via `delegate_task(..., model=...)`. Unspecified inherits the session/`config.yaml` default. See `AgentReference.md` for the `delegation.*` config keys.
+See `AgentReference.md` for the `delegation.*` config keys.
 
 ## Hermes-Native Delegation Primitives
 
 | Primitive | Meaning |
 |-----------|---------|
-| `delegate_task(goal, context)` | Single subagent, isolated context. Give it full context — it starts fresh. |
-| `delegate_task(tasks=[...])` | Parallel subagents, up to `delegation.max_concurrent_children`. |
+| `delegate_task(goal, context)` | Single subagent, isolated context. Give it full context — it starts fresh. Runs in the background automatically. |
+| `delegate_task(tasks=[...])` | Parallel subagents, up to `delegation.max_concurrent_children` (currently three). |
 | `delegate_task(..., role="leaf")` | Worker — cannot re-delegate. The default for grunt work. |
-| `delegate_task(..., role="orchestrator")` | Can spawn its own workers. Use only when the subtree genuinely needs to fan out again. |
-| `delegate_task(..., background=true)` | Returns immediately; gather the result later. For research/long builds whose output isn't needed inline. |
+| `delegate_task(..., role="orchestrator")` | Can spawn its own workers only if nesting is configured; otherwise it is forced to a leaf. Use only when the subtree genuinely needs to fan out again. |
 
 Long-running shell work runs under `terminal(background=true)`, not a subagent. (LifeOS `Bash(run_in_background)` → Hermes `terminal(background=true)`.)
 
@@ -53,10 +52,9 @@ The load-bearing shape for parallel work:
 
 ```
 delegate_task(tasks=[
-  {goal: "Refactor module A to the new API", context: "...", role: "leaf", model: <mid>},
-  {goal: "Refactor module B to the new API", context: "...", role: "leaf", model: <mid>},
-  {goal: "Update the call sites in C",        context: "...", role: "leaf", model: <mid>},
-  {goal: "Regenerate the fixtures in D",       context: "...", role: "leaf", model: <cheap>},
+  {goal: "Refactor module A to the new API", context: "...", role: "leaf"},
+  {goal: "Refactor module B to the new API", context: "...", role: "leaf"},
+  {goal: "Update the call sites in C",        context: "...", role: "leaf"}
 ])
 ```
 
@@ -67,8 +65,8 @@ Delegation weight scales with the Algorithm's effort tier. Load the **Algorithm*
 | Timing | Algorithm tier | Delegation strategy |
 |--------|----------------|---------------------|
 | **fast** | E1–E2 | No delegation, or 1 lightweight worker. Direct tools preferred. |
-| **standard** | E3 | 1–2 foreground subagents for discrete subtasks. |
-| **deep** | E4–E5 | 3–8 parallel subagents; `background=true` for research; `orchestrator` role only when a subtree must re-fan. |
+| **standard** | E3 | 1–2 subagents for discrete subtasks. |
+| **deep** | E4–E5 | 3 parallel subagents (up to max concurrent); `orchestrator` role only when a subtree must re-fan and nesting is configured. |
 
 ## Right-Sizing Pre-Gate (run before any fan-out)
 
@@ -76,7 +74,7 @@ The tiers set a *minimum*; this gate sets the *ceiling* and the proof you owe. I
 
 - **(a) Zero-agent check.** Answer already in working memory, or reachable by `Glob`+`Grep`+`Read` in under 30s, or isolated to one file? → **0 agents, do it inline.**
 - **(b) Disk-effect probe on every writing delegate.** A delegate that says it wrote/edited files is not trusted until confirmed: the file exists AND the diff is non-empty (`Read` / `git diff` / `Grep` the claimed change). A "completed" report is a claim, not evidence. The constitution's verification rule binds delegates exactly as it binds the primary.
-- **(c) Budget reservation above ~8 concurrent.** A wave past ~8 must reserve explicit verification budget and name a non-agent fallback in `## Scope` for when the wave comes back unusable. Nesting via `orchestrator` multiplies the count — the ceiling is on the whole tree.
+- **(c) Budget reservation at capacity.** Reaching the `max_concurrent_children` ceiling (currently three) must reserve explicit verification budget and name a non-agent fallback in `## Scope` for when the wave comes back unusable. Nesting via `orchestrator` (if enabled) multiplies the count — the ceiling is on the whole tree.
 
 ## The `## Scope` Requirement
 
@@ -115,7 +113,7 @@ Briefs state the **ideal state** — WHAT a done result looks like as testable o
 "What does `config.yaml` set for delegation?" → Zero-agent check passes (one `Read`). Do it inline; no delegation.
 
 ### Example 3 — deep fan-out with a verification reserve
-E5 refactor across 12 files. → Split into ≤8 `leaf` dispatches at a mid model, reserve budget to `git diff` every claimed edit (gate b), and name a "revert + do sequentially" fallback in `## Scope` (gate c).
+E5 refactor across files. → Split into `leaf` dispatches up to the maximum concurrent limit (e.g., 3), reserve budget to `git diff` every claimed edit (gate b), and name a "revert + do sequentially" fallback in `## Scope` (gate c).
 
 ## Cross-References
 

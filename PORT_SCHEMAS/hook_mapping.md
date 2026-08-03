@@ -40,6 +40,7 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `com.lifeos.amberroute` | `launchd` every 30min | Hermes cron `amber-route` every 30min | Yes | Grades unrouted Amber captures against TELOS via Hindsight recall+retain, routes to destinations |
 | `com.lifeos.conduit` | `launchd` every 120s | Hermes cron `conduit-capture` every 2min | Yes | Runs `capture.py` to poll current-state signals (appFocus/git/hermesSession) into events.jsonl |
 | `com.lifeos.conduit.insight` | `launchd` every 1h | Hermes cron `conduit-rollup` daily | Yes | Runs `rollup.py` for deterministic daily record, retains into Hindsight |
+| `ULWorkSync.hook.ts` | `SessionEnd` | Not ported (containment) | No | Private principal-specific GitHub-issue capture hook; deliberately not portable under containment. Active task state belongs in workspace/ISA/session artifacts, not Hindsight. |
 
 ## Tools, CLI & Containment additions
 
@@ -56,7 +57,7 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 |---|---|---|---|---|
 | `SystemFileGuard.hook.ts` | `PreToolUse (Write, Edit, MultiEdit)` | Hermes tool approval + path protection | Yes | Already covered as a sub-component of `PreToolGuard.hook.ts` above; the LifeOS system/user write-time guard maps to Hermes tool gating + the constitution's "confirm scope/destination/reversibility" invariant. See the **Config** skill (five-layer layering) for the boundary it enforces. |
 | `MergeSettings.ts` | `SessionStart` (LifeOS settings merge driver) | — | No | Not ported. Hermes reads `config.yaml` natively; there is no `settings.system.json` + `settings.user.json` → generated `settings.json` merge. The **Config** skill documents the Hermes-native layering that replaces it. |
-| Delegation model injection (`AgentInvocation.hook.ts`, retired 2026-07-11) | `PreToolUse (Agent)` | Hermes delegation config (`delegation.*` in `config.yaml`) | No | The LifeOS hook that injected per-agent model choice is retired. On Hermes, subagent model/provider/effort/concurrency come from `delegation.*` config and per-dispatch `delegate_task(..., model=...)`. See the **Delegation** skill + `AgentReference.md`. (Distinct from the `AgentInvocation.hook.ts` lifecycle-events row above, which maps spawn/completion events.) |
+| Delegation model injection (`AgentInvocation.hook.ts`, retired 2026-07-11) | `PreToolUse (Agent)` | Hermes delegation config (`delegation.*` in `config.yaml`) | No | The LifeOS hook that injected per-agent model choice is retired. On Hermes, `delegate_task` inherits the parent model/fallback chain; subagent model/provider/effort/concurrency configuration belongs in the `delegation.*` config, not as a dispatch parameter. See the **Delegation** skill + `AgentReference.md`. (Distinct from the `AgentInvocation.hook.ts` lifecycle-events row above, which maps spawn/completion events.) |
 
 ## ISA & Freshness additions
 

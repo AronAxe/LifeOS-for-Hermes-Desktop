@@ -38,6 +38,14 @@ Each phase names its Hermes-native tooling. Phases may compress or overlap for s
 
 ---
 
+## Derived Ascent Status (optional)
+
+The Hermes Algorithm’s existing seven-phase loop stays authoritative. The historical Ascent labels (Traverse, Marking, Ascending, Anchoring, Camped, Cairn) may be used only as optional present-tense UI/status descriptions derived from current observable task/workspace evidence and the seven-phase loop.
+
+They are not phases, persisted task state, a second state machine, a scheduling system, or a required desktop/terminal implementation. No Kitty/cmux/Pulse integration or `work.json` data model is ported.
+
+---
+
 ## Effort Tiers (E1–E5)
 
 Effort tiers set **floors**, not ceilings — the minimum ISA structure and the minimum thinking depth a run of that weight must clear. Spend scales *up* from the floor as the work reveals difficulty and blast radius; it never drops below it. The principal's plain-language steering ("go heavy", "quick pass", a stated budget) outranks the tier and outranks my judgment. A literal `/e1`–`/e5` reads as "go at least this heavy."
