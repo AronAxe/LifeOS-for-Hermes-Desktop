@@ -36,7 +36,7 @@ The order is load-bearing: **preservation happens at capture, not at the end.** 
 
 LifeOS used a Cloudflare-Worker + D1 ledger for the capture contract. **Hermes replaces that with Hindsight retain as the durable, append-only store.** The capture-contract *fields stay identical*; only the substrate changes.
 
-- **Preserve** = `hindsight_retain` with tags `cat:amber`, `source:amber_capture`, and a stable per-capture `document_id: user:aron:amber:{capture_id}` (capture_id = the dedup identity below). The raw capture is retained verbatim in the content payload so it is never lost.
+- **Preserve** = `hindsight_retain` with tags `cat:amber`, `source:amber_capture`, and a stable per-capture `document_id: user:{id}:amber:{capture_id}` (capture_id = the dedup identity below). The raw capture is retained verbatim in the content payload so it is never lost.
 - **Grade** = `hindsight_recall` for TELOS context (tags `cat:telos`), then score the capture against it. Routing is **agent-driven** — this skill reads the grade and decides the destination; there is no Cloudflare Worker.
 - **Search / Resurface** = `hindsight_recall` filtered to `cat:amber`.
 - **Routed marker** = after routing, `hindsight_retain` the same `document_id` with an added `routed:true` tag (Hindsight replaces the prior facts for that stable id). The raw capture stays immutable in content; the tag records disposition.
@@ -84,7 +84,7 @@ The unattended grading pass is scheduled — see `CRON.md`.
 ## Examples
 
 ### Example 1 — capture a URL from the terminal
-`/skill Amber "capture https://example.com/essay"` → normalize the URL, hash it → `capture_id` → `hindsight_retain` (tags `cat:amber`, `source:amber_capture`, `document_id: user:aron:amber:{hash}`, `privacy_class: public`, `content_kind: article`). Confirm the retain succeeded (provider result) before reporting "preserved". Grading is deferred to the Route pass.
+`/skill Amber "capture https://example.com/essay"` → normalize the URL, hash it → `capture_id` → `hindsight_retain` (tags `cat:amber`, `source:amber_capture`, `document_id: user:{id}:amber:{hash}`, `privacy_class: public`, `content_kind: article`). Confirm the retain succeeded (provider result) before reporting "preserved". Grading is deferred to the Route pass.
 
 ### Example 2 — search everything caught about a topic
 `/skill Amber "search ideas about local-first sync"` → `hindsight_recall` filtered to `cat:amber`, ranked by relevance × recency, newest first, with the routed marker shown per row.
@@ -96,6 +96,6 @@ The unattended grading pass is scheduled — see `CRON.md`.
 
 - Source doctrine adapted: `LIFEOS/DOCUMENTATION/Amber/AmberSystem.md`
 - Memory boundaries + tag taxonomy: `PORT_SCHEMAS/hindsight_memory_schema.md`
-- TELOS truth source: `E:/Dropbox/ARON BIJL MSC/TELOS/` (retained under `cat:telos`, `document_id: user:aron:telos`)
+- TELOS truth source: the configured principal path declared in `LifeOS/install/HERMES.md`, retained under `cat:telos` with `document_id: user:{id}:telos`
 - Curated destination: **Knowledge** skill; the loop that operates on captures: **Algorithm** skill
 - Unattended grading pass: `CRON.md`
