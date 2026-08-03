@@ -41,6 +41,15 @@ This document maps all legacy LifeOS hooks (from `LifeOS/install/hooks/` and `ho
 | `com.lifeos.conduit` | `launchd` every 120s | Hermes cron `conduit-capture` every 2min | Yes | Runs `capture.py` to poll current-state signals (appFocus/git/hermesSession) into events.jsonl |
 | `com.lifeos.conduit.insight` | `launchd` every 1h | Hermes cron `conduit-rollup` daily | Yes | Runs `rollup.py` for deterministic daily record, retains into Hindsight |
 
+## Tools, CLI & Containment additions
+
+| Source component / doctrine | Hermes-native | Port? | Notes |
+|---|---|---|---|
+| `Tools__CliFirstArchitecture` | `CliFirstArchitecture` skill | Yes — doctrine | Deterministic executable operations precede prompts. Hermes consumes local capabilities through native tools, scripts, or CLI; MCP serves a capability only when external clients need it. |
+| `Tools__Cli` / legacy Arbol `pai` action-pipeline model | `CLI` skill + `terminal`, `execute_code`, durable scripts, `cronjob` | Adapted | Preserve explicit input/output, stream separation, exit status, JSON-compatible composition, and direct verification. The custom runner, Bun, and model-level wrappers are retired dependencies. |
+| `Tools__Tools` utility inventory | `Tools` skill + native Hermes tools | Yes — doctrine | `Inference` → configured Hermes provider/tools; memory retrieval → Hindsight/LCM; graph → cognitive graph; monitor → process/cron; doctor → live probes. No custom utility clone. |
+| `Tools__Containment` + `SystemFileGuard.hook.ts` | `Containment` skill + constitution §8 + deliberate staging/release review | Adapted | The portable/private boundary is retained, but Hermes has no direct equivalent of the source system's static containment-zone registry or write-time Claude hook. It is an explicit review gate, not a claimed automatic enforcement layer. |
+
 ## Config & Delegation additions
 
 | Component | Trigger | Hermes-native | Port? | Notes |
