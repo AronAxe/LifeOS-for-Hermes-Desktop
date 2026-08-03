@@ -7,8 +7,9 @@ This manifest categorizes all LifeOS skills present in `LifeOS/install/skills/` 
 These skills are fully compatible with Hermes and install into `$HERMES_HOME/skills/` as a unified skill body:
 
 - **Algorithm** — 7-phase execution loop (OBSERVE→LEARN), effort tiers E1-E5, and ISC quality gates
-- **Amber** — Idea capture and preservation loop (capture→preserve→grade→route→resurface) backed by Hindsight
+- **Amber** — Legacy compatibility alias for Synapse's idea preservation stage; Hindsight-backed capture and resurfacing
 - **Conduit** — Current-state sensing via deterministic Windows polling and daily rollup into Hindsight
+- **Synapse** — Weighted input router (capture → journal → grade → route → resurface), superseding Amber as the canonical router
 - **ISA** — Information Structure Architecture & workspace state manager
 - **Telos** — Life direction, core values, and mission alignment system
 - **WorldThreatModel** — 11 time-horizon macro forecast and vulnerability matrix
@@ -29,6 +30,8 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **BiasCheck** — Cognitive bias detection and calibration
 - **SystemsThinking** — Dynamic systems modeling and leverage point identification
 - **CreateSkill** — Automated skill creation and packaging engine
+- **SkillSystem** — LifeOS skill authoring doctrine mapped to Hermes skill discovery, management, customization, privacy boundaries, and ideal-state prompting
+- **Testing** — LifeOS testing doctrine mapped to Hermes evidence-first verification, ISA probes, anti-criteria, hermetic tests, and repository-native checks
 - **CreateCLI** — Command-line tool scaffold generator
 - **Config** — Hermes-native config layering (constitution → config.yaml → SOUL.md → TELOS → skills); replaces the LifeOS system/user settings merge
 - **Delegation** — Subagent task distribution and result synthesis via `delegate_task`, model-tier matching, and verified fan-out
@@ -61,6 +64,15 @@ These skills are fully compatible with Hermes and install into `$HERMES_HOME/ski
 - **CLI** — Retired Arbol/action/pipeline doctrine → Hermes terminal, execute_code, durable scripts, and native scheduling
 - **Containment** — Portable-release boundary: the OS ships; personal identity, credentials, private infrastructure, and local memory do not
 - **Tools** — LifeOS utility inventory → direct Hermes tools, scripts, Hindsight/LCM, cognitive graph, diagnostics, and skill-promotion rule
+- **Memory** — LifeOS file-memory → Hermes Hindsight mapping (mutation tiers, curation coverage, lifecycle, proposal subtypes)
+- **Schema** — LifeOS USER/ directory schema → Hermes-native destination mapping
+- **Thesis** — LifeOS Thesis operational adaptation (maturity model, core loop, Pulse mapping, Respark, 2036 heuristic)
+- **Pulse** — LifeOS Pulse daemon → Hermes-native mapping (DA subsystem, terminal tabs, metadata surfaces, Observatory dashboard)
+- **Notifications** — LifeOS notification system → Hermes TTS/phone/gateway mapping (voice, ntfy, Discord, smart routing, event log)
+- **Observability** — LifeOS observability pipeline → Hermes LCM/logging mapping (event sources, session state, dashboard)
+- **Router** — Retired LifeOS Router subsystem → Hermes config/delegation/DA judgment mapping (model selection, effort calibration, dispatch policy, cross-vendor egress)
+- **Security** — LifeOS security doctrine (4 articles) → Hermes-native mapping (data classification, egress routing, three-layer defense, supply-chain response)
+- **BackgroundServices** — LifeOS launchd service registry → Hermes cron/plugins mapping (16 services, scheduling, lifecycle)
 - **CMUX** — Multiplexer terminal context management
 
 ## Claude/macOS-specific — not ported
